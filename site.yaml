@@ -11,3 +11,40 @@ plugins:
     - hyde.ext.plugins.text.TextlinksPlugin
 context:
     data:
+        site_title: Hello, World!
+        author:
+            name: Author Name
+            url: "http://example.com"
+        google_analytics_id: UA-XXXXX-YY
+        home_url: index.html
+        menu:
+            options:
+              - default
+              - fixed-top
+            items:
+              - title: Starter Template
+                type: page
+                url: index.html
+              - title: Dropdown
+                type: dropdown
+                sections:
+                  - items:
+                      - title: Jumbotron
+                        type: page
+                        url: jumbotron.html
+                      - title: herp
+                        type: page
+                        url: derp
+                  - items:
+                      - title: asdf
+                        type: page
+                        url: asdf
+              - title: Blog
+                type: node
+                url: blog
+
+        sidebar:
+            - title: One
+              url: one.html
+            - title: Two
+              url: \#

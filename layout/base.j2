@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
+{% block prehead -%}
+{% endblock -%}
 <head>
-<title>{{ resource.meta.title}}</title>
+{% block head -%}
+<title>
+	{% block title -%}
+	{{ site_title }}
+	{% if resource.meta.title -%}
+		| {{ resource.meta.title}}
+	{%- endif %}
+	{% endblock -%}
+</title>
+{% endblock -%}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="{{ media_url('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -14,13 +25,11 @@
 <![endif]-->
 </head>
 <body>
-
+{% block body -%}
 {% filter markdown -%}
-{% block markdown -%}
-{% endblock -%}
+{% block content -%} {% endblock -%}
 {% endfilter -%}
-
-
+{% endblock -%}
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

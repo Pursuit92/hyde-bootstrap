@@ -1,0 +1,78 @@
+{% macro render_navbar() -%} 
+
+<div class="navbar 
+	{%- for option in menu.options %}
+	navbar-{{ option }}
+	{%- endfor %}" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{{ home_url }}">{{ site_title }}</a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+{% for item in menu.items -%} 
+	{% set active = False -%} 
+	{% if item.type == 'page' or item.type == 'node' -%} 
+		{% if item.type == 'page' %}
+		{% set active = (resource.url ==
+				site.content.resource_from_relative_path(item.url).url) -%} 
+	 	{% else %}
+		{% set active = (node ==
+				site.content.node_from_relative_path(item.url)) -%} 
+		{% endif %}
+		<li {% if active %}class="active"{% endif %}> 
+			<a href="{{ content_url(item.url) }}">{{ item.title }}</a>
+		</li>
+	{% elif item.type == 'dropdown' -%} 
+	<li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ item.title }}<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+		{% for section in item.sections -%}
+			{% for item in section.items -%}
+				  <li><a href="{{ content_url(item.url) }}">{{ item.title }}</a></li>
+			{% endfor -%}
+			{% if not loop.last %}
+				<li class="divider"></li>
+			{% endif %}
+		{% endfor -%}
+        </ul>
+      </li>
+	{%- endif %}
+{%- endfor %}
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</div>
+
+{%- endmacro %}
+
+
+
+{% macro render_sidebar() -%} 
+<ul class="nav nav-list">
+	<li class="nav-header">Sidebar</li>
+{% for sidebar_item in sidebar -%} 
+	<li{% if sidebar_item.url == resource.url or sidebar_item.active %} class="active"{% endif %}><a href="{{ sidebar_item.url }}">{{ sidebar_item.title }}</a></li>
+{%- endfor %}
+</ul>
+{%- endmacro %}
+
+{% macro render_excerpt(res, class=None) %}
+{% refer to res.relative_path as post %}
+<div class="container">
+<h3><a href="{{ content_url(res.url) }}">{{ res.meta.title }}</a></h3>
+<p><small>
+	<time datetime="{{ res.meta.created.strftime('%Y-%m-%d') }}">
+	Posted: {{ res.meta.created.strftime('%a, %d %b %Y') }}
+	</time>
+</small></p>
+{{ post.excerpt|markdown|typogrify }}<a href="{{ content_url(res.url) }}">Read more&hellip;</a>
+</div>
+{% endmacro %}
+

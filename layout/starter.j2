@@ -1,0 +1,33 @@
+{% extends "base.j2" %}
+
+{% block prehead -%}
+<html lang="en">
+{% endblock -%}
+
+{% block head -%}
+{{ super() }}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+<!-- Custom styles for this template -->
+<link href="{{ media_url('css/starter-template.css') }}" rel="stylesheet">
+{% endblock -%}
+
+{% block body -%}
+{% from "macros.j2" import render_navbar with context %}
+{{ render_navbar() }}
+
+<div class="container">
+
+	<div class="starter-template">
+		{% filter markdown -%}
+		{% block content -%}
+		{% endblock -%}
+		{% endfilter -%}
+	</div>
+
+</div><!-- /.container -->
+{% endblock -%}
