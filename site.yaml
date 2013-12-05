@@ -25,13 +25,16 @@ context:
               - title: Starter Template
                 type: page
                 url: index.html
+                glyphicon: star
               - title: Dropdown
                 type: dropdown
+                glyphicon: time
                 sections:
                   - items:
                       - title: Jumbotron
                         type: page
                         url: jumbotron.html
+                        glyphicon: search
                       - title: herp
                         type: page
                         url: derp
